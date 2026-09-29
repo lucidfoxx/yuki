@@ -8,8 +8,8 @@ export function createVegetation(scene) {
 
   const dummy = new THREE.Object3D();
   //Sakura Trees
-  const trunkGeo = new THREE.CylinderGeometry(0.1, 0.15, 1, 6);
-  const canopyGeo = new THREE.SphereGeometry(0.6, 6, 6);
+  const trunkGeo = new THREE.CylinderGeometry(0.15, 0.2, 2, 6);
+  const canopyGeo = new THREE.SphereGeometry(0.6, 8, 8);
   canopyGeo.translate(0, 1, 0);
 
   const treeGeo = BufferGeometryUtils.mergeGeometries([trunkGeo, canopyGeo]);
@@ -32,7 +32,7 @@ export function createVegetation(scene) {
     if (y < -1 || y > 3) continue;
 
     dummy.position.set(x, y, z);
-    dummy.scale.setScalar(0.8 + Math.random() * 0.5);
+    dummy.scale.setScalar(0.8 + Math.random() * 2);
     dummy.updateMatrix();
 
     sakuraMesh.setMatrixAt(treeIndex++, dummy.matrix);
