@@ -4,31 +4,30 @@ let controls = {
   left: false,
   right: false,
   camX: 0,
-  camY: 0
+  camY: 0,
 };
 
 let joystick = { active: false, x: 0, y: 0 };
 let cameraTouch = { active: false, lastX: 0, lastY: 0 };
 
 export function setupControls() {
-
   // KEYBOARD
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'w') controls.forward = true;
-    if (e.key === 's') controls.backward = true;
-    if (e.key === 'a') controls.left = true;
-    if (e.key === 'd') controls.right = true;
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "w") controls.forward = true;
+    if (e.key === "s") controls.backward = true;
+    if (e.key === "a") controls.left = true;
+    if (e.key === "d") controls.right = true;
   });
 
-  window.addEventListener('keyup', (e) => {
-    if (e.key === 'w') controls.forward = false;
-    if (e.key === 's') controls.backward = false;
-    if (e.key === 'a') controls.left = false;
-    if (e.key === 'd') controls.right = false;
+  window.addEventListener("keyup", (e) => {
+    if (e.key === "w") controls.forward = false;
+    if (e.key === "s") controls.backward = false;
+    if (e.key === "a") controls.left = false;
+    if (e.key === "d") controls.right = false;
   });
 
   // TOUCH
-  window.addEventListener('touchstart', (e) => {
+  window.addEventListener("touchstart", (e) => {
     for (let t of e.touches) {
       if (t.clientX < window.innerWidth / 2) {
         joystick.active = true;
@@ -42,10 +41,9 @@ export function setupControls() {
     }
   });
 
-  window.addEventListener('touchmove', (e) => {
+  window.addEventListener("touchmove", (e) => {
     for (let t of e.touches) {
       if (t.clientX < window.innerWidth / 2 && joystick.active) {
-
         const dx = t.clientX - joystick.x;
         const dy = t.clientY - joystick.y;
 
@@ -53,9 +51,7 @@ export function setupControls() {
         controls.backward = dy > 20;
         controls.left = dx < -20;
         controls.right = dx > 20;
-
       } else if (cameraTouch.active) {
-
         const dx = t.clientX - cameraTouch.lastX;
         const dy = t.clientY - cameraTouch.lastY;
 
@@ -68,7 +64,7 @@ export function setupControls() {
     }
   });
 
-  window.addEventListener('touchend', () => {
+  window.addEventListener("touchend", () => {
     joystick.active = false;
     cameraTouch.active = false;
 
@@ -76,6 +72,34 @@ export function setupControls() {
     controls.backward = false;
     controls.left = false;
     controls.right = false;
+  });
+
+  // MOUSE CAMERA CONTROL
+  let mouseDown = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  window.addEventListener("mousedown", (e) => {
+    mouseDown = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  window.addEventListener("mouseup", () => {
+    mouseDown = false;
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!mouseDown) return;
+
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+
+    controls.camX -= dx * 0.005;
+    controls.camY -= dy * 0.005;
+
+    lastX = e.clientX;
+    lastY = e.clientY;
   });
 
   return controls;
