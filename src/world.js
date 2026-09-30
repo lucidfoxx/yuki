@@ -36,12 +36,13 @@ export function initWorld(scene, camera) {
   setupCamera(camera, player);
 
   function update(delta) {
-    updatePlayer(player, controls, terrain, delta);
+    updatePlayer(player, controls, camera, delta);
     updateCamera(camera, player, delta, controls);
     updateTerrain(player.position);
     const time = performance.now() * 0.001;
     updateWater(time);
     updateWaterfall(time);
+    controls.update();
     // const time = performance.now() * 0.001;
 
     updatePetals(delta);
