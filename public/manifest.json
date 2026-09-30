@@ -1,0 +1,9 @@
+{
+  "name": "Sakura World",
+  "short_name": "Sakura",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#ffd6e8",
+  "theme_color": "#ffd6e8",
+  "icons": []
+}

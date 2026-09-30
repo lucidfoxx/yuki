@@ -48,13 +48,20 @@ export function createTerrain(scene) {
 }
 
 export function getHeight(x, z) {
-  let n = noise2D(x * 0.01, z * 0.01);
-  return n * 8;
+
+  const base = noise2D(x * 0.01, z * 0.01) * 6;
+
+  const mountain = Math.pow(
+    Math.abs(noise2D(x * 0.003, z * 0.003)),
+    2
+  ) * 25;
+
+  return base + mountain;
 }
 
 function getBiomeColor(h) {
   if (h < -1) return new THREE.Color(0xffd6c9); // beach
-  if (h < 3) return new THREE.Color(0xd7f5d1); // plains
+  if (h < 4) return new THREE.Color(0xd7f5d1); // plains
   return new THREE.Color(0xb8b8c9); // mountains
 }
 
